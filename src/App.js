@@ -1,25 +1,64 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
-function App() {
+const TodoApp = () => {
+  const [task, setTask] = useState('');
+  const [todos, setTodos] = useState([]);
+  const [editIndex, setEditIndex] = useState(null);
+
+  const handleAddOrUpdate = () => {
+    if (!task.trim()) return;
+
+    const updatedTodos = [...todos];
+    if (editIndex !== null) {
+      updatedTodos[editIndex] = task;
+      setEditIndex(null);
+    } else {
+      updatedTodos.push(task);
+    }
+    setTodos(updatedTodos);
+    setTask('');
+  };
+
+  const handleEdit = (index) => {
+    setTask(todos[index]);
+    setEditIndex(index);
+  };
+
+  const handleDelete = (index) => {
+    setTodos(todos.filter((_, i) => i !== index));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="todo-container">
+      <div className="todo-box">
+        <h2>📝 Todo App</h2>
+        <div className="input-section">
+          <input
+            type="text"
+            value={task}
+            placeholder="Enter a task..."
+            onChange={(e) => setTask(e.target.value)}
+          />
+          <button onClick={handleAddOrUpdate}>
+            {editIndex !== null ? 'Update' : 'Add'}
+          </button>
+        </div>
+
+        <ul className="todo-list">
+          {todos.map((item, index) => (
+            <li key={index} className="todo-item">
+              <span>{item}</span>
+              <div>
+                <button className="edit" onClick={() => handleEdit(index)}>Edit</button>
+                <button className="delete" onClick={() => handleDelete(index)}>Delete</button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
-}
+};
 
-export default App;
+export default TodoApp;
