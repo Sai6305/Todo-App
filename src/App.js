@@ -16,6 +16,7 @@ const TodoApp = () => {
     } else {
       updatedTodos.push(task);
     }
+
     setTodos(updatedTodos);
     setTask('');
   };
@@ -26,7 +27,20 @@ const TodoApp = () => {
   };
 
   const handleDelete = (index) => {
+    // If deleting the task currently being edited
+    if (index === editIndex) {
+      setTask('');
+      setEditIndex(null);
+    } else if (index < editIndex) {
+      setEditIndex((prev) => prev - 1);
+    }
+
     setTodos(todos.filter((_, i) => i !== index));
+  };
+
+  const handleCancelEdit = () => {
+    setTask('');
+    setEditIndex(null);
   };
 
   return (
@@ -43,6 +57,11 @@ const TodoApp = () => {
           <button onClick={handleAddOrUpdate}>
             {editIndex !== null ? 'Update' : 'Add'}
           </button>
+          {editIndex !== null && (
+            <button className="cancel" onClick={handleCancelEdit}>
+              Cancel
+            </button>
+          )}
         </div>
 
         <ul className="todo-list">
@@ -50,8 +69,12 @@ const TodoApp = () => {
             <li key={index} className="todo-item">
               <span>{item}</span>
               <div>
-                <button className="edit" onClick={() => handleEdit(index)}>Edit</button>
-                <button className="delete" onClick={() => handleDelete(index)}>Delete</button>
+                <button className="edit" onClick={() => handleEdit(index)}>
+                  Edit
+                </button>
+                <button className="delete" onClick={() => handleDelete(index)}>
+                  Delete
+                </button>
               </div>
             </li>
           ))}

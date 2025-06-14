@@ -1,4 +1,3 @@
-
 /* Global container */
 .todo-container {
   min-height: 100vh;
@@ -43,7 +42,6 @@
 
 .input-section button {
   padding: 12px 20px;
-  background-color: #00796b;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -83,6 +81,7 @@
   cursor: pointer;
 }
 
+/* Button colors */
 .edit {
   background-color: #ffb300;
   color: #fff;
@@ -91,6 +90,16 @@
 .delete {
   background-color: #e53935;
   color: #fff;
+}
+
+.cancel {
+  background-color: #9e9e9e;
+  color: #fff;
+}
+
+/* Add button */
+.input-section button:nth-child(2) {
+  background-color: #00796b;
 }
 
 /* Responsive */
@@ -112,7 +121,7 @@
   .todo-box h2 {
     font-size: 20px;
   }
-}
+
   .input-section input {
     font-size: 14px;
     padding: 10px;
@@ -126,4 +135,4 @@
   .todo-item div {
     margin-top: 10px;
   }
-
+}
